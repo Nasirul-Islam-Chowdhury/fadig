@@ -5,6 +5,7 @@ import Features from "../components/Features";
 import HowItWorks from "../components/HowItWorks";
 import Impact from "../components/Impact";
 import Team from "../components/Team";
+import SkyDrop from "../components/skydrop/SkyDrop";
 import CTASection from "../components/CTASection";
 import Footer from "../components/Footer";
 
@@ -18,6 +19,7 @@ export default function LandingPage() {
       <HowItWorks />
       <Impact />
       <Team />
+      <SkyDrop />
       <CTASection />
       <Footer />
     </div>
