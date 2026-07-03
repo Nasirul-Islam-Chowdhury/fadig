@@ -180,7 +180,7 @@ function AnimatedSkyDrop() {
         />
 
         {/* HUD */}
-        <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between p-6 lg:p-10">
+        <div className="absolute inset-x-0 top-0 z-20 flex items-start justify-between px-6 pt-24 pb-6 lg:px-10 lg:pt-28">
           <div className="rounded-2xl border border-white/10 bg-black/20 px-4 py-3 font-mono backdrop-blur">
             <p className="text-[10px] tracking-widest text-fadig-cream/40 uppercase">
               Altitude
