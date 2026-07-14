@@ -14,9 +14,11 @@ export default function Footer() {
         </div>
 
         <div className="flex items-center gap-6 text-xs text-fadig-cream/50">
-          <a href="#features" className="hover:text-white">Features</a>
-          <a href="#impact" className="hover:text-white">Impact</a>
-          <a href="#team" className="hover:text-white">Team</a>
+          <Link to="/#features" className="hover:text-white">Features</Link>
+          <Link to="/#impact" className="hover:text-white">Impact</Link>
+          <Link to="/about" className="hover:text-white">Our Story</Link>
+          <Link to="/about#roadmap" className="hover:text-white">Roadmap</Link>
+          <Link to="/#team" className="hover:text-white">Team</Link>
           <Link to="/dashboard" className="hover:text-white">Dashboard</Link>
         </div>
 

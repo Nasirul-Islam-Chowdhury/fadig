@@ -3,11 +3,14 @@ import { Link, useNavigate } from "react-router-dom";
 import { Menu, X, ArrowUpRight } from "lucide-react";
 import Logo from "./Logo";
 
+// client-side Links (incl. cross-page hashes) — ScrollManager scrolls to the target
 const NAV_LINKS = [
-  { label: "Features", href: "#features" },
-  { label: "How It Works", href: "#how-it-works" },
-  { label: "Impact", href: "#impact" },
-  { label: "Team", href: "#team" },
+  { label: "Features", to: "/#features" },
+  { label: "How It Works", to: "/#how-it-works" },
+  { label: "Impact", to: "/#impact" },
+  { label: "Our Story", to: "/about" },
+  { label: "Roadmap", to: "/about#roadmap" },
+  { label: "Team", to: "/#team" },
 ];
 
 export default function Navbar() {
@@ -23,13 +26,13 @@ export default function Navbar() {
 
         <div className="hidden items-center gap-8 md:flex">
           {NAV_LINKS.map((link) => (
-            <a
+            <Link
               key={link.label}
-              href={link.href}
+              to={link.to}
               className="text-sm font-medium text-fadig-cream/80 transition hover:text-fadig-green-light"
             >
               {link.label}
-            </a>
+            </Link>
           ))}
         </div>
 
@@ -56,14 +59,14 @@ export default function Navbar() {
         <div className="border-t border-white/5 bg-fadig-bg px-6 pb-6 md:hidden">
           <div className="flex flex-col gap-4 pt-4">
             {NAV_LINKS.map((link) => (
-              <a
+              <Link
                 key={link.label}
-                href={link.href}
+                to={link.to}
                 onClick={() => setOpen(false)}
                 className="text-sm font-medium text-fadig-cream/80"
               >
                 {link.label}
-              </a>
+              </Link>
             ))}
             <button
               onClick={() => navigate("/dashboard")}

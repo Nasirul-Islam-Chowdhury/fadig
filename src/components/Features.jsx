@@ -54,7 +54,7 @@ const FEATURES = [
 
 export default function Features() {
   return (
-    <section id="features" className="py-24">
+    <section id="features" className="scroll-mt-20 py-24">
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="mx-auto max-w-2xl text-center">
           <span className="text-xs font-bold tracking-widest text-fadig-red-light uppercase">

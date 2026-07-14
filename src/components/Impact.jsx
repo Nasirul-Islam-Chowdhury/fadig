@@ -11,7 +11,7 @@ export default function Impact() {
   return (
     <section
       id="impact"
-      className="border-y border-white/5 bg-fadig-bg-soft/40 py-24"
+      className="scroll-mt-20 border-y border-white/5 bg-fadig-bg-soft/40 py-24"
     >
       <div className="mx-auto max-w-7xl px-6 lg:px-10">
         <div className="mx-auto max-w-2xl text-center">
