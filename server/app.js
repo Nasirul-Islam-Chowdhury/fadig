@@ -3,7 +3,18 @@ import Stripe from "stripe";
 import { clerkMiddleware, getAuth } from "@clerk/express";
 import { getDb } from "./db.js";
 
-const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
+// lazy init — a missing key then errors per-request as JSON instead of
+// crashing the whole serverless function at import time
+let stripeClient;
+function stripe() {
+  if (!process.env.STRIPE_SECRET_KEY) {
+    throw new Error(
+      "STRIPE_SECRET_KEY is not set — add it in Vercel → Settings → Environment Variables and redeploy",
+    );
+  }
+  stripeClient ??= new Stripe(process.env.STRIPE_SECRET_KEY);
+  return stripeClient;
+}
 
 // prices live server-side only — never trust amounts from the client
 const PLANS = {
@@ -34,7 +45,7 @@ app.post("/api/checkout", requireUser, async (req, res) => {
     if (!plan) return res.status(400).json({ error: "Unknown plan" });
 
     const origin = req.headers.origin || `https://${req.headers.host}`;
-    const session = await stripe.checkout.sessions.create({
+    const session = await stripe().checkout.sessions.create({
       mode: "subscription",
       line_items: [
         {
@@ -64,7 +75,7 @@ app.post("/api/checkout/verify", requireUser, async (req, res) => {
     const sessionId = req.query.session_id;
     if (!sessionId) return res.status(400).json({ error: "Missing session_id" });
 
-    const session = await stripe.checkout.sessions.retrieve(sessionId);
+    const session = await stripe().checkout.sessions.retrieve(sessionId);
     const paid =
       session.status === "complete" &&
       session.payment_status === "paid" &&
