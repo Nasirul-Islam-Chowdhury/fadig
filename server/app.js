@@ -28,7 +28,17 @@ app.use(clerkMiddleware());
 // JSON 401 instead of requireAuth()'s redirect — this is an API, not a page
 function requireUser(req, res, next) {
   const { userId } = getAuth(req);
-  if (!userId) return res.status(401).json({ error: "Not signed in" });
+  if (!userId) {
+    // distinguish "no token sent" from "token sent but rejected" — the
+    // latter almost always means CLERK_SECRET_KEY belongs to a different
+    // Clerk application than the frontend's publishable key
+    const hasToken = !!req.headers.authorization;
+    return res.status(401).json({
+      error: hasToken
+        ? "Session token rejected — check that CLERK_SECRET_KEY and CLERK_PUBLISHABLE_KEY are from the SAME Clerk app as VITE_CLERK_PUBLISHABLE_KEY"
+        : "Not signed in",
+    });
+  }
   req.userId = userId;
   next();
 }
