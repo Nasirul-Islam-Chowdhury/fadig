@@ -3,6 +3,7 @@ import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useAuth } from "@clerk/clerk-react";
 import { CheckCircle2, Loader2, XCircle } from "lucide-react";
 import Logo from "../components/Logo";
+import { fetchJson } from "../lib/api";
 
 export default function BillingSuccessPage() {
   const [searchParams] = useSearchParams();
@@ -31,12 +32,10 @@ export default function BillingSuccessPage() {
     (async () => {
       try {
         const token = await getToken();
-        const res = await fetch(
+        await fetchJson(
           `/api/checkout/verify?session_id=${encodeURIComponent(sessionId)}`,
           { method: "POST", headers: { Authorization: `Bearer ${token}` } },
         );
-        const data = await res.json();
-        if (!res.ok) throw new Error(data.error || "Verification failed");
         setStatus("success");
         setTimeout(() => navigate("/dashboard", { replace: true }), 1500);
       } catch (err) {

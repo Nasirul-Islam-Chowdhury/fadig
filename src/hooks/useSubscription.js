@@ -1,5 +1,6 @@
 import { useCallback, useEffect, useState } from "react";
 import { useAuth } from "@clerk/clerk-react";
+import { fetchJson } from "../lib/api";
 
 /**
  * Fetches the signed-in user's subscription from the API.
@@ -16,10 +17,9 @@ export default function useSubscription() {
     }
     try {
       const token = await getToken();
-      const res = await fetch("/api/subscription", {
+      const data = await fetchJson("/api/subscription", {
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
       setState({ loading: false, active: !!data.active, plan: data.plan ?? null });
     } catch {
       setState({ loading: false, active: false, plan: null });

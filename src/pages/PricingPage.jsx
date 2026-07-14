@@ -5,6 +5,7 @@ import { Check, Loader2, Sparkles, Lock, CreditCard } from "lucide-react";
 import Navbar from "../components/Navbar";
 import Footer from "../components/Footer";
 import useSubscription from "../hooks/useSubscription";
+import { fetchJson } from "../lib/api";
 
 const TIERS = {
   free: {
@@ -84,12 +85,11 @@ export default function PricingPage() {
     try {
       setCheckingOut(true);
       const token = await getToken();
-      const res = await fetch(`/api/checkout?plan=${billing}`, {
+      const data = await fetchJson(`/api/checkout?plan=${billing}`, {
         method: "POST",
         headers: { Authorization: `Bearer ${token}` },
       });
-      const data = await res.json();
-      if (!res.ok || !data.url) throw new Error(data.error || "Checkout failed");
+      if (!data.url) throw new Error("Checkout failed");
       window.location.href = data.url;
     } catch (err) {
       setError(err.message);
