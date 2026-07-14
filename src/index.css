@@ -1,16 +1,16 @@
 @import "tailwindcss";
 
 @theme {
-  /* FaDig brand palette — sampled from the official pitch deck */
-  --color-fadig-bg: #2b1821;         /* deep wine/maroon background */
-  --color-fadig-bg-soft: #3a2029;    /* slightly lighter panel maroon */
-  --color-fadig-bg-soft-2: #4a2934;  /* card hover / borders */
+  /* FaDig brand palette — dark black-green, accents from the logo kit */
+  --color-fadig-bg: #0a0e0a;         /* near-black with a green undertone */
+  --color-fadig-bg-soft: #121a12;    /* slightly lighter panel green-black */
+  --color-fadig-bg-soft-2: #1d2a1c;  /* card hover / borders */
   --color-fadig-green: #549217;      /* leaf / wordmark green */
   --color-fadig-green-light: #7ec53e;
   --color-fadig-red: #f02a18;        /* primary CTA / icon red */
   --color-fadig-red-light: #f35446;
   --color-fadig-yellow: #e7cc3c;     /* warning / map-pin yellow */
-  --color-fadig-cream: #f5efe9;
+  --color-fadig-cream: #eef2ea;
 
   --font-display: "Baloo 2", ui-rounded, "Segoe UI", sans-serif;
   --font-body: "Poppins", "Segoe UI", sans-serif;

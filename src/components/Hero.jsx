@@ -19,7 +19,7 @@ export default function Hero() {
 
   return (
     <section className="relative overflow-hidden pt-16 pb-24 lg:pt-24 lg:pb-32">
-      {/* ambient glow blobs matching the deck's dark-maroon mood */}
+      {/* ambient glow blobs matching the dark black-green theme */}
       <div className="pointer-events-none absolute -top-32 -right-32 h-96 w-96 rounded-full bg-fadig-green/20 blur-3xl" />
       <div className="pointer-events-none absolute top-40 -left-40 h-96 w-96 rounded-full bg-fadig-red/10 blur-3xl" />
 
@@ -45,7 +45,7 @@ export default function Hero() {
           <div className="mt-9 flex flex-wrap items-center gap-4">
             <button
               onClick={() => navigate("/dashboard")}
-              className="group inline-flex items-center gap-2 rounded-full bg-fadig-red px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-red/30 transition hover:bg-fadig-red-light"
+              className="group inline-flex items-center gap-2 rounded-full bg-fadig-green px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-green/25 transition hover:bg-fadig-green-light"
             >
               Learn More
               <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -58,7 +58,7 @@ export default function Hero() {
             </a>
           </div>
 
-          <div className="mt-12 flex items-center gap-8 border-t border-white/10 pt-8">
+          <div className="mt-12 flex flex-wrap items-center gap-x-8 gap-y-4 border-t border-white/10 pt-8">
             <div>
               <p className="font-display text-2xl font-bold text-white">10M+</p>
               <p className="text-xs text-fadig-cream/50">Farmers addressable</p>

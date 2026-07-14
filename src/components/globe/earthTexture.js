@@ -94,7 +94,7 @@ export function createEarthTexture() {
   const ctx = canvas.getContext("2d");
 
   // ocean — dark teal-navy so it reads as "water" without clashing with the
-  // page's maroon background
+  // page's black-green background
   const grad = ctx.createLinearGradient(0, 0, 0, h);
   grad.addColorStop(0, "#101c22");
   grad.addColorStop(0.5, "#16232a");

@@ -1,6 +1,11 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { TriangleAlert, Satellite, Check, X } from "lucide-react";
-import { alerts as initialAlerts } from "../../components/dashboard/mockData";
+import {
+  useAlerts,
+  markRead,
+  dismissAlert,
+  markAllSeen,
+} from "../../components/dashboard/alertsStore";
 
 const FILTERS = ["all", "high", "medium", "low"];
 
@@ -11,12 +16,13 @@ const SEVERITY = {
 };
 
 export default function AlertsPage() {
-  const [items, setItems] = useState(initialAlerts);
+  const items = useAlerts();
   const [filter, setFilter] = useState("all");
 
-  const markRead = (id) =>
-    setItems((prev) => prev.map((a) => (a.id === id ? { ...a, read: true } : a)));
-  const dismiss = (id) => setItems((prev) => prev.filter((a) => a.id !== id));
+  // seeing the page clears the topbar notification badge
+  useEffect(() => {
+    markAllSeen();
+  }, []);
 
   const filtered =
     filter === "all" ? items : items.filter((a) => a.severity === filter);
@@ -90,7 +96,7 @@ export default function AlertsPage() {
                   </button>
                 )}
                 <button
-                  onClick={() => dismiss(a.id)}
+                  onClick={() => dismissAlert(a.id)}
                   className="flex items-center gap-1 rounded-full border border-white/10 px-2.5 py-1 text-[10px] font-semibold text-fadig-cream/70 transition hover:border-white/25 hover:text-white"
                 >
                   <X className="h-3 w-3" /> Dismiss

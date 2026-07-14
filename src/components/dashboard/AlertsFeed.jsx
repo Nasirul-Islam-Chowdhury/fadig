@@ -1,6 +1,6 @@
 import { Link } from "react-router-dom";
 import { TriangleAlert, Satellite, ArrowUpRight } from "lucide-react";
-import { alerts } from "./mockData";
+import { useAlerts } from "./alertsStore";
 
 const SEVERITY = {
   high: "border-fadig-red/40 bg-fadig-red/10 text-fadig-red-light",
@@ -9,6 +9,7 @@ const SEVERITY = {
 };
 
 export default function AlertsFeed() {
+  const alerts = useAlerts();
   const preview = alerts.slice(0, 5);
 
   return (

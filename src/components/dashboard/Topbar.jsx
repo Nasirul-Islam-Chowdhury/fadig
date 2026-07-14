@@ -1,7 +1,9 @@
 import { useMemo, useRef, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
+import { useUser, UserButton } from "@clerk/clerk-react";
 import { Search, Bell, MapPin, TriangleAlert } from "lucide-react";
-import { alerts, zones } from "./mockData";
+import { zones } from "./mockData";
+import { useAlerts } from "./alertsStore";
 
 const PAGE_META = {
   "/dashboard": {
@@ -33,8 +35,10 @@ const PAGE_META = {
 export default function Topbar() {
   const { pathname } = useLocation();
   const navigate = useNavigate();
+  const { user } = useUser();
   const meta = PAGE_META[pathname] ?? PAGE_META["/dashboard"];
-  const unreadCount = alerts.filter((a) => !a.read).length;
+  const alerts = useAlerts();
+  const unreadCount = alerts.filter((a) => !a.seen).length;
 
   const [query, setQuery] = useState("");
   const [focused, setFocused] = useState(false);
@@ -59,7 +63,7 @@ export default function Topbar() {
         )
         .slice(0, 4),
     };
-  }, [query]);
+  }, [query, alerts]);
 
   const hasResults = results.zoneHits.length > 0 || results.alertHits.length > 0;
 
@@ -73,7 +77,36 @@ export default function Topbar() {
   };
 
   return (
-    <div className="hidden items-center justify-between border-b border-white/5 bg-fadig-bg/60 px-8 py-5 backdrop-blur lg:flex">
+    <>
+      {/* mobile topbar — compact: title + alerts + user */}
+      <div className="flex items-center justify-between gap-3 border-b border-white/5 bg-fadig-bg/60 px-5 py-4 backdrop-blur lg:hidden">
+        <div className="min-w-0">
+          <h1 className="truncate font-display text-lg font-bold text-white">
+            {meta.title}
+          </h1>
+          <p className="truncate text-[11px] text-fadig-cream/50">
+            {meta.subtitle}
+          </p>
+        </div>
+        <div className="flex shrink-0 items-center gap-3">
+          <Link
+            to="/dashboard/alerts"
+            className="relative rounded-full border border-white/10 p-2 text-fadig-cream/70 transition hover:border-white/25 hover:text-white"
+            aria-label="View alerts"
+          >
+            <Bell className="h-4 w-4" />
+            {unreadCount > 0 && (
+              <span className="absolute -top-0.5 -right-0.5 flex h-4 w-4 items-center justify-center rounded-full bg-fadig-red text-[9px] font-bold text-white">
+                {unreadCount}
+              </span>
+            )}
+          </Link>
+          <UserButton />
+        </div>
+      </div>
+
+      {/* desktop topbar */}
+      <div className="hidden items-center justify-between border-b border-white/5 bg-fadig-bg/60 px-8 py-5 backdrop-blur lg:flex">
       <div>
         <h1 className="font-display text-xl font-bold text-white">
           {meta.title}
@@ -162,19 +195,17 @@ export default function Topbar() {
           )}
         </Link>
 
-        <Link
-          to="/dashboard/settings"
-          className="flex items-center gap-2.5 rounded-full border border-white/10 py-1.5 pr-4 pl-1.5 transition hover:border-white/25"
-        >
-          <div className="flex h-8 w-8 items-center justify-center rounded-full bg-gradient-to-br from-fadig-green to-fadig-green-light text-xs font-bold text-white">
-            RH
-          </div>
+        <div className="flex items-center gap-2.5 rounded-full border border-white/10 py-1.5 pr-4 pl-1.5">
+          <UserButton />
           <div>
-            <p className="text-xs font-semibold text-white">Rahim Hasan</p>
-            <p className="text-[10px] text-fadig-cream/40">Rangpur Division</p>
+            <p className="text-xs font-semibold text-white">
+              {user?.fullName || user?.primaryEmailAddress?.emailAddress || "Farmer"}
+            </p>
+            <p className="text-[10px] text-fadig-cream/40">FaDig Pro</p>
           </div>
-        </Link>
+        </div>
       </div>
-    </div>
+      </div>
+    </>
   );
 }

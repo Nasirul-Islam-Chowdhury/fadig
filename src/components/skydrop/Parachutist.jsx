@@ -36,13 +36,13 @@ export default function Parachutist({ className }) {
       <path
         d="M10 95 C 10 25, 60 5, 110 5 C 160 5, 210 25, 210 95 C 170 78, 150 90, 110 90 C 70 90, 50 78, 10 95 Z"
         fill="url(#canopyStripes)"
-        stroke="#2b1821"
+        stroke="#10160f"
         strokeWidth="2.5"
         strokeLinejoin="round"
       />
 
       {/* canopy ribs */}
-      <g stroke="#2b1821" strokeOpacity="0.28" strokeWidth="1.5" fill="none">
+      <g stroke="#10160f" strokeOpacity="0.28" strokeWidth="1.5" fill="none">
         <path d="M40 18 C 35 44, 35 70, 45 90" />
         <path d="M80 7 C 78 40, 78 68, 82 90" />
         <path d="M140 7 C 142 40, 142 68, 138 90" />
@@ -53,7 +53,7 @@ export default function Parachutist({ className }) {
       <circle cx="110" cy="177" r="3" fill="#f5efe9" />
 
       {/* reserve rig on back */}
-      <rect x="97" y="180" width="26" height="32" rx="7" fill="#3a2029" />
+      <rect x="97" y="180" width="26" height="32" rx="7" fill="#1d2a1c" />
 
       {/* torso / jumpsuit */}
       <path
@@ -65,7 +65,7 @@ export default function Parachutist({ className }) {
 
       {/* head + helmet visor */}
       <circle cx="110" cy="173" r="11.5" fill="#e7cc3c" />
-      <path d="M100.5 173 a9.5 9.5 0 0 1 19 0 Z" fill="#2b1821" />
+      <path d="M100.5 173 a9.5 9.5 0 0 1 19 0 Z" fill="#10160f" />
 
       {/* arms gripping risers */}
       <path
@@ -88,20 +88,20 @@ export default function Parachutist({ className }) {
       {/* tucked flying legs */}
       <path
         d="M96 230 C 89 248, 76 259, 63 262"
-        stroke="#3a2029"
+        stroke="#1d2a1c"
         strokeWidth="9.5"
         strokeLinecap="round"
         fill="none"
       />
       <path
         d="M124 230 C 131 248, 144 259, 157 262"
-        stroke="#3a2029"
+        stroke="#1d2a1c"
         strokeWidth="9.5"
         strokeLinecap="round"
         fill="none"
       />
-      <ellipse cx="60" cy="264" rx="9.5" ry="5.5" fill="#2b1821" />
-      <ellipse cx="160" cy="264" rx="9.5" ry="5.5" fill="#2b1821" />
+      <ellipse cx="60" cy="264" rx="9.5" ry="5.5" fill="#10160f" />
+      <ellipse cx="160" cy="264" rx="9.5" ry="5.5" fill="#10160f" />
     </svg>
   );
 }

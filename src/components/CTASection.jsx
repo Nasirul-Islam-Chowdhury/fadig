@@ -22,7 +22,7 @@ export default function CTASection() {
           <div className="relative mt-9 flex flex-wrap items-center justify-center gap-4">
             <button
               onClick={() => navigate("/dashboard")}
-              className="group inline-flex items-center gap-2 rounded-full bg-fadig-red px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-red/30 transition hover:bg-fadig-red-light"
+              className="group inline-flex items-center gap-2 rounded-full bg-fadig-green px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-green/25 transition hover:bg-fadig-green-light"
             >
               Explore Dashboard
               <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

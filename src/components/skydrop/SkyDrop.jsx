@@ -67,7 +67,7 @@ function PhaseText({ progress, phase, isLast, onDeploy }) {
       {isLast && (
         <button
           onClick={onDeploy}
-          className="pointer-events-auto group mt-7 inline-flex items-center gap-2 rounded-full bg-fadig-red px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-red/30 transition hover:bg-fadig-red-light"
+          className="pointer-events-auto group mt-7 inline-flex items-center gap-2 rounded-full bg-fadig-green px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-green/25 transition hover:bg-fadig-green-light"
         >
           Deploy the Dashboard
           <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />
@@ -158,11 +158,11 @@ function AnimatedSkyDrop() {
         {/* sky */}
         <motion.div
           style={{ opacity: skyTopOpacity }}
-          className="absolute inset-0 bg-gradient-to-b from-fadig-bg via-fadig-bg-soft-2 to-[#6b3a2e]"
+          className="absolute inset-0 bg-gradient-to-b from-fadig-bg via-fadig-bg-soft-2 to-[#37501f]"
         />
         <motion.div
           style={{ opacity: skyBottomOpacity }}
-          className="absolute inset-0 bg-gradient-to-b from-[#6b3a2e] via-fadig-bg-soft-2 to-fadig-bg"
+          className="absolute inset-0 bg-gradient-to-b from-[#37501f] via-fadig-bg-soft-2 to-fadig-bg"
         />
 
         {/* clouds */}
@@ -290,7 +290,7 @@ function StaticSkyDrop({ onDeploy }) {
           </p>
           <button
             onClick={onDeploy}
-            className="group mt-7 inline-flex items-center gap-2 rounded-full bg-fadig-red px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-red/30 transition hover:bg-fadig-red-light"
+            className="group mt-7 inline-flex items-center gap-2 rounded-full bg-fadig-green px-7 py-3.5 text-sm font-bold tracking-wide text-white uppercase shadow-xl shadow-fadig-green/25 transition hover:bg-fadig-green-light"
           >
             Deploy the Dashboard
             <ArrowUpRight className="h-4 w-4 transition group-hover:translate-x-0.5 group-hover:-translate-y-0.5" />

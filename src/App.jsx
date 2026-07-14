@@ -8,7 +8,10 @@ import AlertsPage from "./pages/dashboard/AlertsPage";
 import ReportsPage from "./pages/dashboard/ReportsPage";
 import ActionPlansPage from "./pages/dashboard/ActionPlansPage";
 import SettingsPage from "./pages/dashboard/SettingsPage";
+import PricingPage from "./pages/PricingPage";
+import BillingSuccessPage from "./pages/BillingSuccessPage";
 import ScrollManager from "./components/ScrollManager";
+import RequireSubscription from "./components/RequireSubscription";
 
 function App() {
   return (
@@ -17,7 +20,16 @@ function App() {
       <Routes>
         <Route path="/" element={<LandingPage />} />
         <Route path="/about" element={<AboutPage />} />
-        <Route path="/dashboard" element={<Dashboard />}>
+        <Route path="/pricing" element={<PricingPage />} />
+        <Route path="/billing/success" element={<BillingSuccessPage />} />
+        <Route
+          path="/dashboard"
+          element={
+            <RequireSubscription>
+              <Dashboard />
+            </RequireSubscription>
+          }
+        >
           <Route index element={<Overview />} />
           <Route path="risk-map" element={<RiskMapPage />} />
           <Route path="alerts" element={<AlertsPage />} />

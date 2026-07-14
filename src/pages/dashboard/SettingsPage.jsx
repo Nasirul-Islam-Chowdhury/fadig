@@ -1,4 +1,5 @@
 import { useState } from "react";
+import { useUser } from "@clerk/clerk-react";
 import { User, Bell, Satellite, ShieldCheck } from "lucide-react";
 
 function Toggle({ enabled, onChange, label }) {
@@ -35,13 +36,16 @@ function Card({ icon: Icon, title, subtitle, children }) {
 }
 
 export default function SettingsPage() {
-  const [profile, setProfile] = useState({
-    name: "Rahim Hasan",
-    email: "rahim.hasan@fadig.app",
-    phone: "+880 1711-000000",
-    division: "Rangpur Division",
-  });
+  // real account data from Clerk (guard guarantees a signed-in user here)
+  const { user } = useUser();
+  const [profile, setProfile] = useState(() => ({
+    name: user?.fullName || "",
+    email: user?.primaryEmailAddress?.emailAddress || "",
+    phone: user?.primaryPhoneNumber?.phoneNumber || "",
+    division: "",
+  }));
   const [saved, setSaved] = useState(false);
+  const [saveError, setSaveError] = useState(null);
 
   const [notifications, setNotifications] = useState({
     email: true,
@@ -66,15 +70,40 @@ export default function SettingsPage() {
   const toggleSource = (key) =>
     setSources((s) => ({ ...s, [key]: !s[key] }));
 
-  const handleSave = (e) => {
+  const handleSave = async (e) => {
     e.preventDefault();
-    setSaved(true);
-    setTimeout(() => setSaved(false), 2500);
+    setSaveError(null);
+    try {
+      // persist the name to the Clerk account; phone/division are demo-only
+      const [firstName, ...rest] = profile.name.trim().split(/\s+/);
+      await user.update({ firstName, lastName: rest.join(" ") });
+      setSaved(true);
+      setTimeout(() => setSaved(false), 2500);
+    } catch (err) {
+      setSaveError(err.errors?.[0]?.message || err.message);
+    }
   };
 
   return (
     <>
       <Card icon={User} title="Profile" subtitle="Your account details">
+        <div className="mb-5 flex items-center gap-3">
+          {user?.imageUrl && (
+            <img
+              src={user.imageUrl}
+              alt="Profile"
+              className="h-12 w-12 rounded-full border border-white/10"
+            />
+          )}
+          <div>
+            <p className="text-sm font-semibold text-white">
+              {user?.fullName || "Your account"}
+            </p>
+            <p className="text-[11px] text-fadig-cream/40">
+              Signed in with Google via Clerk
+            </p>
+          </div>
+        </div>
         <form onSubmit={handleSave} className="grid grid-cols-1 gap-4 sm:grid-cols-2">
           <label className="text-xs font-medium text-fadig-cream/50">
             Full name
@@ -85,11 +114,11 @@ export default function SettingsPage() {
             />
           </label>
           <label className="text-xs font-medium text-fadig-cream/50">
-            Email
+            Email (from your Google account)
             <input
               value={profile.email}
-              onChange={updateProfile("email")}
-              className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white focus:border-fadig-green/50 focus:outline-none"
+              readOnly
+              className="mt-1.5 w-full cursor-not-allowed rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-fadig-cream/60 focus:outline-none"
             />
           </label>
           <label className="text-xs font-medium text-fadig-cream/50">
@@ -97,6 +126,7 @@ export default function SettingsPage() {
             <input
               value={profile.phone}
               onChange={updateProfile("phone")}
+              placeholder="+880 1XXX-XXXXXX"
               className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white focus:border-fadig-green/50 focus:outline-none"
             />
           </label>
@@ -105,19 +135,25 @@ export default function SettingsPage() {
             <input
               value={profile.division}
               onChange={updateProfile("division")}
+              placeholder="e.g. Sylhet Division"
               className="mt-1.5 w-full rounded-xl border border-white/10 bg-white/5 px-3.5 py-2.5 text-sm text-white focus:border-fadig-green/50 focus:outline-none"
             />
           </label>
           <div className="sm:col-span-2">
             <button
               type="submit"
-              className="rounded-full bg-fadig-red px-6 py-2.5 text-xs font-bold tracking-wide text-white uppercase shadow-lg shadow-fadig-red/20 transition hover:bg-fadig-red-light"
+              className="rounded-full bg-fadig-green px-6 py-2.5 text-xs font-bold tracking-wide text-white uppercase shadow-lg shadow-fadig-green/20 transition hover:bg-fadig-green-light"
             >
               Save changes
             </button>
             {saved && (
               <span className="ml-3 text-xs font-medium text-fadig-green-light">
                 Saved ✓
+              </span>
+            )}
+            {saveError && (
+              <span className="ml-3 text-xs font-medium text-fadig-red-light">
+                {saveError}
               </span>
             )}
           </div>
